@@ -65,7 +65,7 @@ require_once('functions.php');
 			<div class="span8">
 				<div class="hero-unit">
 					<h1>Create your own Mosaic!</h1>
-					<p>Use your own images to make a mosaic, like these! To get started, just login on the left.</p> 
+					<p>Use your own images to make a mosaic, like these! <b>To get started, just login on the left.</b></p> 
 
 					<div class="onLoginHide onLogoutSlideIn hide">
 						<img src="img/mosaic-sample.png">&nbsp;&nbsp;&nbsp;<img src="img/mosaic-sample.png"><br><br>
@@ -76,6 +76,15 @@ require_once('functions.php');
 					</div>
 
 				</div>
+
+				<h2>Upload your Files</h2>
+
+
+				<form id="fileupload" action ="uploadPlugin/server/php" method="POST" enctype="multipart/form-data">
+				</form>
+
+
+
 			</div>
 			<div class="span4">
 				<div class="loginContainer">
