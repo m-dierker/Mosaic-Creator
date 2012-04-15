@@ -12,6 +12,13 @@ function getFacebookObject()
 	return $facebook;
 }
 
+function getFacebookUser()
+{
+	$facebook = getFacebookObject();
+
+	return $facebook->getUser();
+}
+
 // Redirect if the user isn't logged in
 function redirectIfNotLoggedIn($facebook)
 {

@@ -1,5 +1,37 @@
 <?php
 
+function includeFileUploadImageGallery()
+{
+	?>
+	<div id="modal-gallery" class="modal modal-gallery hide fade">
+	    <div class="modal-header">
+	        <a class="close" data-dismiss="modal">&times;</a>
+	        <h3 class="modal-title"></h3>
+	    </div>
+	    <div class="modal-body"><div class="modal-image"></div></div>
+	    <div class="modal-footer">
+	        <a class="btn modal-download" target="_blank">
+	            <i class="icon-download"></i>
+	            <span>Download</span>
+	        </a>
+	        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+	            <i class="icon-play icon-white"></i>
+	            <span>Slideshow</span>
+	        </a>
+	        <a class="btn btn-info modal-prev">
+	            <i class="icon-arrow-left icon-white"></i>
+	            <span>Previous</span>
+	        </a>
+	        <a class="btn btn-primary modal-next">
+	            <span>Next</span>
+	            <i class="icon-arrow-right icon-white"></i>
+	        </a>
+	    </div>
+	</div>
+
+	<?php
+}
+
 function includeFileUploadScripts()
 {
 	?>
@@ -26,7 +58,7 @@ function includeFileUploadScripts()
 	<!-- The localization script -->
 	<script src="upload-plugin/js/locale.js"></script>
 	<!-- The main application script -->
-	<script src="upload-plugin/js/main.js"></script>
+	<script src="js/fileUpload.js"></script>
 	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->
 	<!--[if gte IE 8]><script src="upload-plugin/js/cors/jquery.xdr-transport.js"></script><![endif]-->
 

@@ -13,8 +13,21 @@
 error_reporting(E_ALL | E_STRICT);
 
 require('upload.class.php');
+require('../../functions.php');
 
-$upload_handler = new UploadHandler();
+$user = getFacebookUser();
+
+if($user == 0)
+{
+    die('hacking attempt');
+}
+
+$upload_handler = new UploadHandler(
+    array(
+
+        "upload_dir" => dirname($_SERVER['SCRIPT_FILENAME']) . "/$user/files/"
+
+        ));
 
 header('Pragma: no-cache');
 header('Cache-Control: no-store, no-cache, must-revalidate');
