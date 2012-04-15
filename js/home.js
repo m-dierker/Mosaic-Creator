@@ -41,17 +41,16 @@ function checkFacebookLogin()
 		if(response.status === 'connected')
 		{
 			// The user is logged in, and has authenticated the app
-
             onUserLogin();
 		}
 		else if(response.status === 'not_authorized')
-		{
-        
+		{   
+            // The user is logged into Facebook, but not authorized for the app
 			onUserLogout();
-			// The user is logged into Facebook, but not authorized for the app
 		}
 		else
 		{
+            // The user is logged out
 			onUserLogout();
         }
 
@@ -68,7 +67,7 @@ function logout()
 function showOnLogoutItems()
 {
     $('.onLogoutSlideOut').hide(750);
-    $('.onLogoutSlideIn, .onLogoutSlide').show(750);
+    $('.onLogoutSlideIn, .onLogoutSlide').slideDown(750);
     $('.onLogoutFadeIn').fadeIn(750);
     $('.onLogoutFadeOut').fadeOut(750);
     $('.onLogoutShow').show(0);
@@ -82,7 +81,7 @@ function showOnLogoutItems()
 function showOnLoginItems()
 {
     $('.onLoginSlideOut').hide(750);
-    $('.onLoginSlideIn, .onLoginSlide').show(750);
+    $('.onLoginSlideIn, .onLoginSlide').slideDown(750);
     $('.onLoginFadeIn').fadeIn(750);
     $('.onLoginFadeOut').fadeOut(750);
     $('.onLoginShow').show(0);
