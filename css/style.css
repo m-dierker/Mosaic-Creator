@@ -1,0 +1,28 @@
+body
+{
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+.loginContainer
+{
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -mox-border-radius: 6px;
+    background-color: #EEE;
+    padding: 20px;
+}
+
+.login, .loginFadeless
+{
+    display:none;
+}
+
+.logout, .logoutFadeless
+{
+    display:none;
+}
+
+.hide
+{
+    display:none;
+}
