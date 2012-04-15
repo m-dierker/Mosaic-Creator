@@ -1,3 +1,4 @@
 
 config.php
 upload-plugins/server/php/files/*
+upload-plugins/server/php/thumbnails/*
