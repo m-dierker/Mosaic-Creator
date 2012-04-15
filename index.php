@@ -4,7 +4,7 @@
 
 <?php
 
-// Require functions.php, which includes things you need for facebook, and includes JQuery
+// Require functions.php, which includes things you need for facebook, and includes JQuery.
 require_once('functions.php');
 require_once('fileUploads.php');
 
