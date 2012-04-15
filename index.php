@@ -4,11 +4,9 @@
 
 <?php
 
-error_log('hi');
 // Require functions.php, which includes things you need for facebook, and includes JQuery
 require_once('functions.php');
 require_once('fileUploads.php');
-
 
 ?>
 
@@ -67,7 +65,7 @@ require_once('fileUploads.php');
 					<div class="span8">
 						<div class="hero-unit">
 							<h1>Create your own Mosaic!</h1>
-							<p>Use your own images to make a mosaic, like these! <b>To get started, just login on the left.</b></p> 
+							<p>Use your own images to make a mosaic, like these! <b>To get started, just login on the right.</b></p> 
 
 							<div class="onLoginHide onLogoutSlideIn hide">
 								<img src="img/mosaic-sample.png">&nbsp;&nbsp;&nbsp;<img src="img/mosaic-sample.png"><br><br>
@@ -161,6 +159,14 @@ require_once('fileUploads.php');
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
+
+	<!-- Start File Upload Scripts -->
+
+	<?php includeFileUploadScripts(); ?>
+
+	<!-- End File Upload Scripts -->
+
+
 	<script type="text/javascript">
 	var facebookName, facebookFirstName, facebookLastName, facebookID;
 	</script>
@@ -189,11 +195,7 @@ require_once('fileUploads.php');
 	</script>
 
 
-	<!-- Start File Upload Scripts -->
-
-	<?php includeFileUploadScripts(); ?>
-
-	<!-- End File Upload Scripts -->
+	
 
 </body>
 </html>

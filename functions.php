@@ -5,6 +5,8 @@ require('config.php');
 
 function getFacebookObject()
 {
+	d('Getting the facebook object');
+
 	$facebook = new Facebook(array(
 	'appId' => FACEBOOK_APP_ID,
 	'secret' => FACEBOOK_APP_SECRET));
@@ -34,5 +36,10 @@ function login($facebook)
 	header('Location: ' . $facebook->getLoginUrl(array('scope' => FACEBOOK_SCOPE)));
 }
 
+// Debug logging
+function d($message)
+{
+	error_log($message . "\n", 3, LOG_FILE);
+}
 
 ?>

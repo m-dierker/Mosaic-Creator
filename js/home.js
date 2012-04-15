@@ -22,6 +22,8 @@ function setupFacebook()
 function onUserLogin()
 {
     setUserFacebookName();
+    
+    setupFileUpload();
 
     showOnLoginItems();
 }
@@ -61,6 +63,7 @@ function checkFacebookLogin()
 function logout()
 {
 	FB.logout();
+    $.get('logout.php');
 }
 
 // Shows login items
@@ -91,15 +94,10 @@ function showOnLoginItems()
 
 }
 
-// Sets up the logout box
-function setupLogoutBox()
-{
-    setUserFacebookName();
-}
-
 // Sets the facebook names up on the page
 function setUserFacebookName()
 {
+    console.log("Setting up facebook names");
 	FB.api('/me', function (response){
 		setFacebookName(response.name);
 		setFacebookFirstName(response.first_name);

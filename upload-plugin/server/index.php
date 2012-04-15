@@ -17,17 +17,26 @@ require('../../functions.php');
 
 $user = getFacebookUser();
 
+d("Upload PHP - $user");
+
 if($user == 0)
 {
+    $user_ip = $_SERVER['REMOTE_ADDR'];
+    d("Hacking attempt on the upload plugin index from $user_ip");
     die('hacking attempt');
 }
 
-$upload_handler = new UploadHandler(
-    array(
 
-        "upload_dir" => dirname($_SERVER['SCRIPT_FILENAME']) . "/$user/files/"
+$upload_dir = dirname(__FILE__) . "/user-files/$user/files/";
 
-        ));
+
+d("Upload Directory: $upload_dir");
+
+$upload_handler = new UploadHandler(array(
+
+    'upload_dir' => $upload_dir
+
+    ));
 
 header('Pragma: no-cache');
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -42,16 +51,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'HEAD':
     case 'GET':
+    d("get");
         $upload_handler->get();
         break;
     case 'POST':
         if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
+            d("delete");
             $upload_handler->delete();
         } else {
+            d("post");
+            
+            if(!is_dir($upload_dir))
+                mkdir($upload_dir, 0777, true);
+
+
             $upload_handler->post();
         }
         break;
     case 'DELETE':
+    d("delete1");
         $upload_handler->delete();
         break;
     default:
