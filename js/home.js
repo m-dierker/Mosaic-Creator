@@ -1,4 +1,38 @@
 
+initListeners();
+
+// Initialize any listeners that need to be initialized
+function initListeners()
+{
+	$(".step").hover(function()
+	{
+		var id = $(this).attr('id');
+		fadeInActiveStep(id);
+
+	}, function(){
+
+		var id = $(this).attr('id');
+		fadeOutActiveStep(id);
+	});
+}
+
+// Fade in the active step for the steps menu
+function fadeInActiveStep(id)
+{ 
+	$('#'+id).animate(
+		{
+			backgroundColor: "#FFF79F"
+		}, 25);
+}
+
+function fadeOutActiveStep(id)
+{
+	$('#'+id).animate(
+		{
+			backgroundColor: "#EEEEEE"
+		}, 100);
+}
+
 // Called when the Facebook Javascript (FB.init()) is finished loading
 function facebookInitComplete()
 {

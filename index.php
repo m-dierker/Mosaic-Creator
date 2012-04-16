@@ -129,7 +129,7 @@ require_once('fileUploads.php');
 
 					</div>
 					<div class="span4">
-						<div class="loginContainer">
+						<div class="loginContainer roundedBox"> 
 							<div class="onLoginHide onLogoutHide">
 								Loading... <img src="img/pacman-loader.gif">
 							</div>
@@ -149,6 +149,18 @@ require_once('fileUploads.php');
 								</p>
 							</div>
 						</div>
+						<div class="stepsContainer roundedBox onLogoutHide onLoginFadeIn" style="margin-top: 40px">
+								<u><h2>Image Creation</h2></u>
+
+								<?php 
+
+								makeStep('1) Upload Images', 'Upload your images to the server', 'fileUploadStep');
+								makeStep('2) Select Source', 'Pick one of your images to be the mosaic\'s background', 'selectSourceStep');
+								makeStep('3) Format Images', 'Format your uploads so they can be included in a mosaic', 'formatImagesStep');
+
+								?>
+
+						</div>
 					</div>
 				</div>
 			</div> <!-- /container -->
@@ -158,6 +170,7 @@ require_once('fileUploads.php');
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.color.js"></script>
 
 
 	<!-- Start File Upload Scripts -->
@@ -169,6 +182,7 @@ require_once('fileUploads.php');
 
 	<script type="text/javascript">
 	var facebookName, facebookFirstName, facebookLastName, facebookID;
+	var activeStep = null;
 	</script>
 
 	<script type="text/javascript" src="js/home.js"></script>

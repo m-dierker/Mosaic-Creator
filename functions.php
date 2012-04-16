@@ -3,10 +3,9 @@
 require('facebook-php-sdk/src/facebook.php');
 require('config.php');
 
+// Get the Facebook object
 function getFacebookObject()
-{
-	d('Getting the facebook object');
-
+{ 
 	$facebook = new Facebook(array(
 	'appId' => FACEBOOK_APP_ID,
 	'secret' => FACEBOOK_APP_SECRET));
@@ -14,6 +13,7 @@ function getFacebookObject()
 	return $facebook;
 }
 
+// Get the active facebook user using the PHP API
 function getFacebookUser()
 {
 	$facebook = getFacebookObject();
@@ -40,6 +40,25 @@ function login($facebook)
 function d($message)
 {
 	error_log($message . "\n", 3, LOG_FILE);
+}
+
+// Writes the HTML for a step
+function makeStep($title, $desc, $id)
+{
+	?>
+
+	<div class="step" id="<?php echo $id ?>">
+		<div class="stepTitle">
+			<h3><?php echo $title ?></h3>
+		</div>
+		<div class="stepDesc">
+			<p><?php echo $desc ?></p>
+		</div>
+	</div>
+
+	<hr>
+
+	<?
 }
 
 ?>

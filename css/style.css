@@ -3,7 +3,7 @@ body
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
-.loginContainer
+.roundedBox
 {
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -25,4 +25,17 @@ body
 .hide
 {
     display:none;
+}
+
+.step
+{
+	margin-left: -20px;
+	padding-left: 20px;
+}
+
+.stepsContainer hr
+{
+	margin: 5px;
+	color: #CDCDCD;
+	border-color: #CDCDCD ;
 }
