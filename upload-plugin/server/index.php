@@ -26,15 +26,21 @@ if($user == 0)
     die('hacking attempt');
 }
 
+$user_dir = dirname(__FILE__) . "/user-files/$user";
+$user_url = 'http://' . $_SERVER['SERVER_NAME']  . "/upload-plugin/server/user-files/$user"; //finish me
 
-$upload_dir = dirname(__FILE__) . "/user-files/$user/files/";
+$upload_dir = "$user_dir/files/";
+$upload_url = "$user_url/files/";
+
+$thumbnail_dir = dirname(__FILE__) . "/thumbnails/";
 
 
 d("Upload Directory: $upload_dir");
 
 $upload_handler = new UploadHandler(array(
 
-    'upload_dir' => $upload_dir
+    'upload_dir' => $upload_dir,
+    'upload_url' => $upload_url
 
     ));
 
@@ -62,7 +68,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
             d("post");
             
             if(!is_dir($upload_dir))
-                mkdir($upload_dir, 0777, true);
+                mkdir($upload_dir, 0755, true);
+
+            if(!is_dir($thumbnail_dir))
+                mkdir($thumbnail_dir, 0755, true);
 
 
             $upload_handler->post();

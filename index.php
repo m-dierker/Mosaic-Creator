@@ -77,8 +77,10 @@ require_once('fileUploads.php');
 
 						</div>
 
-						<div id="fileUpload" class="onLoginSlide hide">
-							<h2>Upload your Files</h2>
+						<!-- Start Step 1, File Uploading -->
+
+						<div id="fileUpload" class="onLoginSlide hide step">
+							<h2>Upload your Images</h2>
 
 
 							<form id="fileupload" action="upload-plugin/server/" method="POST" enctype="multipart/form-data">
@@ -125,6 +127,12 @@ require_once('fileUploads.php');
 						<?php includeFileUploadTemplates(); ?>
 
 						</div>
+
+						<!-- End Step 1 -->
+
+						<!-- Start Step 2, Select source -->
+
+						<!-- End Step 2 -->
 						
 
 					</div>

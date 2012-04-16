@@ -47,7 +47,7 @@ function makeStep($title, $desc, $id)
 {
 	?>
 
-	<div class="step" id="<?php echo $id ?>">
+	<div class="sidebarStep" id="<?php echo $id ?>">
 		<div class="stepTitle">
 			<h3>
 				<span class="stepSelector hide">

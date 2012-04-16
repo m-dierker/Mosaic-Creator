@@ -1,10 +1,11 @@
 
 initListeners();
+setActiveStep('fileUploadStep');
 
 // Initialize any listeners that need to be initialized
 function initListeners()
 {
-	$(".step").hover(function()
+	$(".sidebarStep").hover(function()
 	{
 		var id = $(this).attr('id');
 		fadeInActiveStep(id);
@@ -15,7 +16,7 @@ function initListeners()
 		fadeOutActiveStep(id);
 	});
 
-	$(".step").click(function()
+	$(".sidebarStep").click(function()
 	{
 		setActiveStep($(this).attr('id'));
 	});
@@ -32,6 +33,35 @@ function setActiveStep(id)
 	activeStep = id;
 
 	$('#' + activeStep + " .stepSelector").show("slide", { direction: "left" }, 100)
+
+
+	switch(activeStep)
+	{
+		case 'fileUploadStep':
+			hideOtherSteps('fileUpload');
+			$('#fileUpload').slideDown();
+			break;
+
+		case 'selectSourceStep':
+			hideOtherSteps('selectSource');
+			$('#selectSource').slideDown();
+			break;
+
+		case 'formatImagesStep':
+			hideOtherSteps('formatImages');
+			$('#formatImages').slideDown();
+			break;
+	}
+}
+
+// Hides other steps besides the specified one
+function hideOtherSteps(id)
+{
+	if(typeof id === undefined)
+		$('.step').slideUp();
+	else
+		$('.step').not('#' + id).slideUp();
+
 }
 
 // Fade in the active step for the steps menu
