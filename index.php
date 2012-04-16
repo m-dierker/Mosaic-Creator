@@ -149,7 +149,7 @@ require_once('fileUploads.php');
 								</p>
 							</div>
 						</div>
-						<div class="stepsContainer roundedBox onLogoutHide onLoginFadeIn" style="margin-top: 40px">
+						<div class="stepsContainer roundedBox onLoginFade hide" style="margin-top: 40px">
 								<u><h2>Image Creation</h2></u>
 
 								<?php 
@@ -169,7 +169,9 @@ require_once('fileUploads.php');
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-dropdown.js"></script>
 	<script src="js/jquery.color.js"></script>
 
 

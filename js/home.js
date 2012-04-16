@@ -14,6 +14,24 @@ function initListeners()
 		var id = $(this).attr('id');
 		fadeOutActiveStep(id);
 	});
+
+	$(".step").click(function()
+	{
+		setActiveStep($(this).attr('id'));
+	});
+}
+
+// Sets the active step (as it was clicked)
+function setActiveStep(id)
+{
+	if(activeStep !== null)
+	{
+		$('#' + activeStep + " .stepSelector").hide("slide", { direction: "right" }, 100);
+	}
+
+	activeStep = id;
+
+	$('#' + activeStep + " .stepSelector").show("slide", { direction: "left" }, 100)
 }
 
 // Fade in the active step for the steps menu
@@ -105,12 +123,13 @@ function showOnLogoutItems()
 {
     $('.onLogoutSlideOut').hide(750);
     $('.onLogoutSlideIn, .onLogoutSlide').slideDown(750);
-    $('.onLogoutFadeIn').fadeIn(750);
+    $('.onLogoutFadeIn, .onLogoutFade').fadeIn(750);
     $('.onLogoutFadeOut').fadeOut(750);
     $('.onLogoutShow').show(0);
     $('.onLogoutHide').hide(0);
     
     $('.onLoginSlide').hide(0);
+    $('.onLoginFade').fadeOut(750);
 
 }
 
@@ -119,12 +138,13 @@ function showOnLoginItems()
 {
     $('.onLoginSlideOut').hide(750);
     $('.onLoginSlideIn, .onLoginSlide').slideDown(750);
-    $('.onLoginFadeIn').fadeIn(750);
+    $('.onLoginFadeIn, .onLoginFade').fadeIn(750);
     $('.onLoginFadeOut').fadeOut(750);
     $('.onLoginShow').show(0);
     $('.onLoginHide').hide(0);
     
     $('.onLogoutSlide').hide(0);
+    $('.onLogoutFade').fadeOut(750);
 
 }
 

@@ -22,11 +22,6 @@ body
     display:none;
 }
 
-.hide
-{
-    display:none;
-}
-
 .step
 {
 	margin-left: -20px;
@@ -38,4 +33,14 @@ body
 	margin: 5px;
 	color: #CDCDCD;
 	border-color: #CDCDCD ;
+}
+
+.stepsContainer .stepSelector
+{
+	float:left;
+}
+
+.stepsContainer .stepTitleText
+{
+	margin-left: 5px;
 }

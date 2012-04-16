@@ -36,8 +36,6 @@ function includeFileUploadScripts()
 {
 	?>
 
-	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-	<script src="upload-plugin/js/vendor/jquery.ui.widget.js"></script>
 	<!-- The Templates plugin is included to render the upload/download listings -->
 	<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
 	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->

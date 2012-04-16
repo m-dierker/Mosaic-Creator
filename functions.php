@@ -49,7 +49,14 @@ function makeStep($title, $desc, $id)
 
 	<div class="step" id="<?php echo $id ?>">
 		<div class="stepTitle">
-			<h3><?php echo $title ?></h3>
+			<h3>
+				<span class="stepSelector hide">
+					&raquo;
+				</span>
+				<span class="stepTitleText">
+					<?php echo $title ?>
+				</span>
+			</h3>
 		</div>
 		<div class="stepDesc">
 			<p><?php echo $desc ?></p>
