@@ -10,14 +10,13 @@
  * http://www.opensource.org/licenses/MIT
  */
 
-error_reporting(E_ALL | E_STRICT);
+// error_reporting(E_ALL | E_STRICT);
+error_reporting(0);
 
 require('upload.class.php');
 require('../../functions.php');
 
 $user = getFacebookUser();
-
-d("Upload PHP - $user");
 
 if($user == 0)
 {
@@ -32,15 +31,21 @@ $user_url = 'http://' . $_SERVER['SERVER_NAME']  . "/upload-plugin/server/user-f
 $upload_dir = "$user_dir/files/";
 $upload_url = "$user_url/files/";
 
-$thumbnail_dir = dirname(__FILE__) . "/thumbnails/";
-
-
-d("Upload Directory: $upload_dir");
+$thumbnail_dir = "$user_dir/thumbnails/";
+$thumbnail_url = "$user_url/thumbnails/";
 
 $upload_handler = new UploadHandler(array(
 
     'upload_dir' => $upload_dir,
-    'upload_url' => $upload_url
+    'upload_url' => $upload_url,
+
+    'image_versions' => array(
+
+        'thumbnail' => array(
+                    'upload_dir' => $thumbnail_dir,
+                    'upload_url' => $thumbnail_url,
+        )
+    )
 
     ));
 

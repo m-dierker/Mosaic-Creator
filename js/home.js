@@ -103,6 +103,8 @@ function setupFacebook()
 // Called after the user has logged in via Facebook
 function onUserLogin()
 {
+    console.log("We're in onUserLogin");
+    
     setUserFacebookName();
     
     setupFileUpload();
@@ -113,6 +115,8 @@ function onUserLogin()
 // Called after the user has logged out via Facebook
 function onUserLogout()
 {
+    console.log("We're in onUserLogout");
+    
     showOnLogoutItems();
 }
 
@@ -124,16 +128,19 @@ function checkFacebookLogin()
 
 		if(response.status === 'connected')
 		{
+            console.log("Facebook says we're logged in and authenticated");
 			// The user is logged in, and has authenticated the app
             onUserLogin();
 		}
 		else if(response.status === 'not_authorized')
 		{   
+            console.log("Facebook says we're logged in but not authorized for the app");
             // The user is logged into Facebook, but not authorized for the app
 			onUserLogout();
 		}
 		else
 		{
+            console.log("Facebook says we aren't logged in");
             // The user is logged out
 			onUserLogout();
         }

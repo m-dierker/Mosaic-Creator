@@ -1,4 +1,4 @@
 
 config.php
-upload-plugins/server/user-files/**
-upload-plugins/server/thumbnails/**
+upload-plugin/server/user-files/**
+upload-plugin/server/thumbnails/**
