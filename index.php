@@ -67,7 +67,7 @@ require_once('fileUploads.php');
 							<h1>Create your own Mosaic!</h1>
 							<p>Use your own images to make a mosaic, like these! <b>To get started, just login on the right.</b></p> 
 
-							<div class="onLoginHide onLogoutSlideIn hide">
+							<div class="onLogoutSlide hide">
 								<img src="img/mosaic-sample.png">&nbsp;&nbsp;&nbsp;<img src="img/mosaic-sample.png"><br><br>
 								<a class="btn btn-primary btn-large" href="img/mosaic.png">See them bigger!</a>
 							</div>
@@ -79,7 +79,7 @@ require_once('fileUploads.php');
 
 						<!-- Start Step 1, File Uploading -->
 
-						<div id="fileUpload" class="onLoginSlide hide step">
+						<div id="fileUpload" class="fileUpload step hide">
 							<h2>Upload your Images</h2>
 
 
@@ -122,18 +122,36 @@ require_once('fileUploads.php');
 							</form>
 						
 
-						<?php includeFileUploadImageGallery(); ?>
+							<?php includeFileUploadImageGallery(); ?>
 
-						<?php includeFileUploadTemplates(); ?>
+							<?php includeFileUploadTemplates(); ?>
 
 						</div>
 
-						<!-- End Step 1 -->
+						<!-- End File Upload -->
 
-						<!-- Start Step 2, Select source -->
+						<!-- Start Select Source -->
 
-						<!-- End Step 2 -->
-						
+						<div id="selectSource" class="selectSource step hide">
+
+							<h2>Select the source image</h2>
+
+							<div id="selectSourceGallery" class="selectSourceGallery">
+							</div>
+
+						</div>
+
+						<!-- End Select Source -->
+
+						<!-- Start Format Images -->
+
+						<div id="formatImages" class="formatImages step hide">
+
+							<h2>Format your images</h2>
+
+						</div>
+
+						<!-- End Format Images -->
 
 					</div>
 					<div class="span4">

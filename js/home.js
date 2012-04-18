@@ -1,6 +1,12 @@
+// Initialize the various steps, and their associated divs to be shown/hidden.
+// These should be in the order they appear for right/left sliding to work properly
+var stepList = ['fileUploadStep', 'selectSourceStep', 'formatImagesStep'];
+var stepDivs = ['fileUpload', 'selectSource', 'formatImages']; 
+
 
 initListeners();
 setActiveStep('fileUploadStep');
+
 
 // Initialize any listeners that need to be initialized
 function initListeners()
@@ -8,12 +14,12 @@ function initListeners()
 	$(".sidebarStep").hover(function()
 	{
 		var id = $(this).attr('id');
-		fadeInActiveStep(id);
+		fadeInActiveStepLabel(id);
 
 	}, function(){
 
 		var id = $(this).attr('id');
-		fadeOutActiveStep(id);
+		fadeOutActiveStepLabel(id);
 	});
 
 	$(".sidebarStep").click(function()
@@ -27,45 +33,94 @@ function setActiveStep(id)
 {
 	if(activeStep !== null)
 	{
+		if(id == activeStep)
+			return;
+
 		$('#' + activeStep + " .stepSelector").hide("slide", { direction: "right" }, 100);
 	}
 
+	// Slides the selector in for the new element
+	$('#' + id + " .stepSelector").show("slide", { direction: "left" }, 100)
+
+	// Slides the current step out in the correct direction
+	var slideRight =stepList.indexOf(activeStep) > stepList.indexOf(id);
+	slideActiveStepOut(slideRight);
+
+	// Slides the new step in
+	slideNewStepIn(stepDivs[stepList.indexOf(id)], slideRight);
+
 	activeStep = id;
-
-	$('#' + activeStep + " .stepSelector").show("slide", { direction: "left" }, 100)
-
 
 	switch(activeStep)
 	{
-		case 'fileUploadStep':
-			hideOtherSteps('fileUpload');
-			$('#fileUpload').slideDown();
-			break;
-
 		case 'selectSourceStep':
-			hideOtherSteps('selectSource');
-			$('#selectSource').slideDown();
-			break;
-
-		case 'formatImagesStep':
-			hideOtherSteps('formatImages');
-			$('#formatImages').slideDown();
+			setupSelectSourceGallery();
 			break;
 	}
 }
 
-// Hides other steps besides the specified one
-function hideOtherSteps(id)
+// Sets up the select source gallery
+function setupSelectSourceGallery()
 {
-	if(typeof id === undefined)
-		$('.step').slideUp();
-	else
-		$('.step').not('#' + id).slideUp();
+	var galleryWidth = 5;
+	var galleryCount = 0;
 
+	
+
+	$.get('upload-plugin/server/', function(gallery)
+	{
+		var text = '<table class="selectSourceGalleryTable">';
+
+		for(index in gallery)
+		{
+			console.log("Loop " + index);
+			if(galleryCount % galleryWidth == 0)
+			{
+				text += '<tr>';
+			}
+
+			var img = gallery[index];
+			text += '<td><img src="' + img['thumbnail_url'] + '" alt="' + img['name'] + '" title="' + img['name'] + '"><br><p alt="' + img['name'] + '" title="' + img['name'] + '">' + getNameForGallery(img['name']) + '</p></td>'
+
+			galleryCount++;
+
+			if(galleryCount % galleryWidth == 0)
+			{
+				text += '</tr>';
+			}
+
+		}	
+
+		text += "</table>";
+
+		$('#selectSourceGallery').html(text);
+
+	});
+
+	
+}
+
+// Gets the name for the gallery
+function getNameForGallery(name)
+{
+	if(name.length > 15)
+		return name.substring(0, 12) + "...";
+}
+
+// Slides the active step out to the left, and delays until it's done
+function slideActiveStepOut(right)
+{
+	$('#' + stepDivs[stepList.indexOf(activeStep)]).hide("slide", {direction: (right? "right" : "left") }, 400);
+}
+
+// Slides the new step in, and sets the active step
+function slideNewStepIn(id, right)
+{
+	$('#' + id).delay(400).show("slide", {direction: (right? "left" : "right")}, 400);
 }
 
 // Fade in the active step for the steps menu
-function fadeInActiveStep(id)
+function fadeInActiveStepLabel(id)
 { 
 	$('#'+id).animate(
 		{
@@ -73,7 +128,7 @@ function fadeInActiveStep(id)
 		}, 25);
 }
 
-function fadeOutActiveStep(id)
+function fadeOutActiveStepLabel(id)
 {
 	$('#'+id).animate(
 		{
