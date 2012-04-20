@@ -156,7 +156,20 @@ require_once('fileUploads.php');
 									<b>Uh oh!</b> It looks like you've skipped a step. Go back to step 2 and select a source image first!
 								</div>
 
-								<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
+								<p>
+									<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
+								</p>
+
+								<div id="formatImagesStatus" class="formatImagesStatus hide">
+									<div class="progress progress-striped active">
+										<div id="formatImagesProgressBar" class="bar" style="width: 0%"></div>
+									</div>
+									<h4><b>Progress: </b><span id="formatImagesProgressStatus">0 / ?</span> images processed</h4>
+								</div>
+
+								<div id="formatImagesComplete" class="formatImagesComplete hide">
+									<h2>Image Formatting Complete!</h2>
+								</div>
 							</div>
 
 						</div>

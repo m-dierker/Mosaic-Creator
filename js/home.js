@@ -7,6 +7,8 @@ var stepDivs = ['fileUpload', 'selectSource', 'formatImages'];
 var facebookName, facebookFirstName, facebookLastName, facebookID;
 var activeStep = null;
 var sourceImage = null;
+var sourceGallerySetup = false, formatImagesSetup = false;
+var imageList = null;
 
 initListeners();
 setActiveStep('fileUploadStep');
@@ -58,19 +60,70 @@ function setActiveStep(id)
 	switch(activeStep)
 	{
 		case 'selectSourceStep':
-			setupSelectSourceGallery();
+			if(!sourceGallerySetup)
+				setupSelectSourceGallery();
 			break;
 		case 'formatImagesStep':
-			setupFormatImages();
+			if(!formatImagesSetup)
+				setupFormatImages();
 			break;
 	}
 }
 
 // Requires a source image has been selected, or shows the error
+// Returns true if there is a source image
+function requireSourceImage()
+{
+	if(sourceImage === null)
+	{
+		$('#formatImagesNeedsSourceImage').slideDown();
+		return false;
+	}
+
+	if($('#formatImagesNeedsSourceImage:visible'))
+		$('formatImagesNeedsSourceImage').slideUp();
+
+	return true;
+}
 
 function formatImages()
 {
-	requireSourceImage();
+	if(!requireSourceImage())
+		return;
+
+	var images = getImageList();
+
+	var processedCount = 0;
+	var imageCount = images.length;
+
+	$('#formatImagesComplete').slideUp();
+	$('#formatImagesStatus').slideDown();
+
+	for(index in gallery)
+	{
+		var img = gallery[index];
+
+		var img_name = img['name'];
+
+		$.get('img_process.php?cmd=square&name=' + escapeURI(img_name), function(data)
+		{
+			if(data === "1")
+			{
+				processedCount++;
+
+				console.log("Processed " + processedCount + " of " + imageCount);
+
+				$('#formatImagesProgressBar').css('width', (processedCount/imageCount * 100.0) + '%');
+				$('#formatImagesProgressStatus').text(proccessedCount + " / " + imageCount);
+			}
+			else
+				console.log("Error Processing Image " + img_name + ": " + data);
+
+		});
+	}
+
+	$('#formatImagesStatus').slideUp();
+	$('#formatImagesComplete').slideDown();
 }
 
 // Sets up formatting the images
@@ -86,63 +139,73 @@ function setupSelectSourceGallery()
 	var galleryCount = 0;
 
 	
+	var gallery = getImageList();
+	var text = '<table class="selectSourceGalleryTable">';
 
-	$.get('upload-plugin/server/', function(gallery)
+	for(index in gallery)
 	{
-		var text = '<table class="selectSourceGalleryTable">';
-
-		for(index in gallery)
+		if(galleryCount % galleryWidth == 0)
 		{
-			if(galleryCount % galleryWidth == 0)
-			{
-				text += '<tr>';
-			}
+			text += '<tr>';
+		}
 
-			var img = gallery[index];
-			text += '<td class="selectSourceImage" id="' + img['name'] + '"><img src="' + img['thumbnail_url'] + '" alt="' + img['name'] + '" title="' + img['name'] + '"><br><p alt="' + img['name'] + '" title="' + img['name'] + '">' + getNameForGallery(img['name']) + '</p></td>'
+		var img = gallery[index];
+		text += '<td class="selectSourceImage" id="' + img['name'] + '"><img src="' + img['thumbnail_url'] + '" alt="' + img['name'] + '" title="' + img['name'] + '"><br><p alt="' + img['name'] + '" title="' + img['name'] + '">' + getNameForGallery(img['name']) + '</p></td>'
 
-			galleryCount++;
+		galleryCount++;
 
-			if(galleryCount % galleryWidth == 0)
-			{
-				text += '</tr>';
-			}
-
-		}	
-
-		text += "</table>";
-
-		$('#selectSourceGallery').html(text);
-
-		$('td.selectSourceImage').hover(function()
+		if(galleryCount % galleryWidth == 0)
 		{
-			// The image is being hovered over
+			text += '</tr>';
+		}
 
-			if($(this).attr('id') !== sourceImage)
-				$(this).css("background-color", "#FFF79F");
+	}	
 
-		}, function()
-		{
-			// No more hover
-			if($(this).attr('id') !== sourceImage)
-				$(this).animate({
+	text += "</table>";
 
-					backgroundColor: '#FFFFFF'
+	$('#selectSourceGallery').html(text);
 
-				}, 100);
+	$('td.selectSourceImage').hover(function()
+	{
+		// The image is being hovered over
 
-		});
+		if($(this).attr('id') !== sourceImage)
+			$(this).css("background-color", "#FFF79F");
 
-		$('td.selectSourceImage').click(function()
-		{
-			if(sourceImage !== null)
-				clearSourceImageBackground();
-			setSourceImage($(this).attr('id'));
-		});
+	}, function()
+	{
+		// No more hover
+		if($(this).attr('id') !== sourceImage)
+			$(this).animate({
+
+				backgroundColor: '#FFFFFF'
+
+			}, 100);
 
 	});
 
-	
+	$('td.selectSourceImage').click(function()
+	{
+		if(sourceImage !== null)
+			clearSourceImageBackground();
+		setSourceImage($(this).attr('id'));
+	});
+
+	sourceGallerySetup = true;
+}
+
+// Gets the image gallery, possibly the cached version
+function getImageList()
+{
+	if(imageList !== null)
+		return imageList;
+
+	$.get('upload-plugin/server/', function(gallery)
+	{
+		imageList = gallery;
+	});
+
+	return imageList;
 }
 
 // Clears the old source image's background
