@@ -115,9 +115,9 @@ function includeFileUploadTemplates()
 	            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
 	            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
 	        {% } else { %}
-	            <td class="preview">{% if (file.thumbnail_url) { %}
+	            <!--<td class="preview">{% if (file.thumbnail_url) { %}
 	                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
-	            {% } %}</td>
+	            {% } %}</td> -->
 	            <td class="name">
 	                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
 	            </td>

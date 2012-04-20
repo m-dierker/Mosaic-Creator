@@ -4,6 +4,10 @@ var stepList = ['fileUploadStep', 'selectSourceStep', 'formatImagesStep'];
 var stepDivs = ['fileUpload', 'selectSource', 'formatImages']; 
 
 
+var facebookName, facebookFirstName, facebookLastName, facebookID;
+var activeStep = null;
+var sourceImage = null;
+
 initListeners();
 setActiveStep('fileUploadStep');
 
@@ -56,7 +60,23 @@ function setActiveStep(id)
 		case 'selectSourceStep':
 			setupSelectSourceGallery();
 			break;
+		case 'formatImagesStep':
+			setupFormatImages();
+			break;
 	}
+}
+
+// Requires a source image has been selected, or shows the error
+
+function formatImages()
+{
+	requireSourceImage();
+}
+
+// Sets up formatting the images
+function setupFormatImages()
+{
+	requireSourceImage();
 }
 
 // Sets up the select source gallery
@@ -73,14 +93,13 @@ function setupSelectSourceGallery()
 
 		for(index in gallery)
 		{
-			console.log("Loop " + index);
 			if(galleryCount % galleryWidth == 0)
 			{
 				text += '<tr>';
 			}
 
 			var img = gallery[index];
-			text += '<td><img src="' + img['thumbnail_url'] + '" alt="' + img['name'] + '" title="' + img['name'] + '"><br><p alt="' + img['name'] + '" title="' + img['name'] + '">' + getNameForGallery(img['name']) + '</p></td>'
+			text += '<td class="selectSourceImage" id="' + img['name'] + '"><img src="' + img['thumbnail_url'] + '" alt="' + img['name'] + '" title="' + img['name'] + '"><br><p alt="' + img['name'] + '" title="' + img['name'] + '">' + getNameForGallery(img['name']) + '</p></td>'
 
 			galleryCount++;
 
@@ -95,9 +114,52 @@ function setupSelectSourceGallery()
 
 		$('#selectSourceGallery').html(text);
 
+		$('td.selectSourceImage').hover(function()
+		{
+			// The image is being hovered over
+
+			if($(this).attr('id') !== sourceImage)
+				$(this).css("background-color", "#FFF79F");
+
+		}, function()
+		{
+			// No more hover
+			if($(this).attr('id') !== sourceImage)
+				$(this).animate({
+
+					backgroundColor: '#FFFFFF'
+
+				}, 100);
+
+		});
+
+		$('td.selectSourceImage').click(function()
+		{
+			if(sourceImage !== null)
+				clearSourceImageBackground();
+			setSourceImage($(this).attr('id'));
+		});
+
 	});
 
 	
+}
+
+// Clears the old source image's background
+function clearSourceImageBackground()
+{
+	$('#' + sourceImage.replace('.', '\\.')).animate(
+	{
+		backgroundColor: "#FFFFFF"
+	}, 100);
+}
+
+// Sets the source image
+function setSourceImage(id)
+{
+	sourceImage = id;
+
+	$('#' + sourceImage.replace('.', '\\.')).css('background-color', '#ffb980');
 }
 
 // Gets the name for the gallery

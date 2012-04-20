@@ -135,6 +135,7 @@ require_once('fileUploads.php');
 						<div id="selectSource" class="selectSource step hide">
 
 							<h2>Select the source image</h2>
+							<p>The source image is the one that the mosaic is made out of, and does not have to be resized!</p>
 
 							<div id="selectSourceGallery" class="selectSourceGallery">
 							</div>
@@ -148,6 +149,15 @@ require_once('fileUploads.php');
 						<div id="formatImages" class="formatImages step hide">
 
 							<h2>Format your images</h2>
+							<p>Once you've selected your source, the rest of the images must be processed into squares!</p>
+
+							<div id="formatImagesDisplay">
+								<div id="formatImagesNeedsSourceImage" class="alert alert-error hide">
+									<b>Uh oh!</b> It looks like you've skipped a step. Go back to step 2 and select a source image first!
+								</div>
+
+								<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
+							</div>
 
 						</div>
 
@@ -207,11 +217,6 @@ require_once('fileUploads.php');
 
 	<!-- End File Upload Scripts -->
 
-
-	<script type="text/javascript">
-	var facebookName, facebookFirstName, facebookLastName, facebookID;
-	var activeStep = null;
-	</script>
 
 	<script type="text/javascript" src="js/home.js"></script>
 
