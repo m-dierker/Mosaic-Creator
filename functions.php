@@ -39,7 +39,7 @@ function login($facebook)
 // Debug logging
 function d($message)
 {
-	error_log($message . "\n", 3, LOG_FILE);
+	error_log(date('n/j/y g:i:s A') . ': ' . $message . "\n", 3, LOG_FILE);
 }
 
 // Writes the HTML for a step

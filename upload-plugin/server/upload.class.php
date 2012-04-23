@@ -382,7 +382,6 @@ class UploadHandler
             header('Content-type: text/plain');
         }
 
-        d("Upload class's post is returning $json");
         echo $json;
     }
     

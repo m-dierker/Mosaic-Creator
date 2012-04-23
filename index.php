@@ -4,7 +4,7 @@
 
 <?php
 
-// Require functions.php, which includes things you need for facebook, and includes JQuery.
+// Require functions.php, which includes things you need for facebook and other helper methods
 require_once('functions.php');
 require_once('fileUploads.php');
 
@@ -156,9 +156,11 @@ require_once('fileUploads.php');
 									<b>Uh oh!</b> It looks like you've skipped a step. Go back to step 2 and select a source image first!
 								</div>
 
-								<p>
-									<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
-								</p>
+								<div id="formatImagesStart" class="formatImagesStart">
+									<p>
+										<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
+									</p>
+								</div>
 
 								<div id="formatImagesStatus" class="formatImagesStatus hide">
 									<div class="progress progress-striped active">
@@ -168,7 +170,8 @@ require_once('fileUploads.php');
 								</div>
 
 								<div id="formatImagesComplete" class="formatImagesComplete hide">
-									<h2>Image Formatting Complete!</h2>
+									<h3>Image Formatting Complete!</h3>
+									<h4>Please continue to step 4!</h4>
 								</div>
 							</div>
 

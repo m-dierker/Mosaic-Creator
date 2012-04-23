@@ -7,7 +7,7 @@ var stepDivs = ['fileUpload', 'selectSource', 'formatImages'];
 var facebookName, facebookFirstName, facebookLastName, facebookID;
 var activeStep = null;
 var sourceImage = null;
-var sourceGallerySetup = false, formatImagesSetup = false;
+var sourceGallerySetup = false;
 var imageList = null;
 var processedCount, imageCount;
 
@@ -61,12 +61,10 @@ function setActiveStep(id)
 	switch(activeStep)
 	{
 		case 'selectSourceStep':
-			if(!sourceGallerySetup)
-				setupSelectSourceGallery();
+			setupSelectSourceGallery();
 			break;
 		case 'formatImagesStep':
-			if(!formatImagesSetup)
-				setupFormatImages();
+			setupFormatImages();
 			break;
 	}
 }
@@ -81,8 +79,8 @@ function requireSourceImage()
 		return false;
 	}
 
-	if($('#formatImagesNeedsSourceImage:visible'))
-		$('formatImagesNeedsSourceImage').slideUp();
+	$('#formatImagesNeedsSourceImage').slideUp().hide();
+		
 
 	return true;
 }
@@ -96,7 +94,6 @@ function formatImages(gallery)
 	// Request the gallery and have it call this method again
 	if(typeof gallery === 'undefined')
 	{
-		console.log("Requesting the image gallery");
 		getImageList(function(data)
 			{
 				formatImages(data);
@@ -105,8 +102,9 @@ function formatImages(gallery)
 	}
 
 	processedCount = 0;
-	imageCount = gallery.length;
+	imageCount = gallery.length - 1;
 
+	$('#formatImagesStart').slideUp();
 	$('#formatImagesComplete').slideUp();
 	$('#formatImagesStatus').slideDown();
 
@@ -115,6 +113,9 @@ function formatImages(gallery)
 		var img = gallery[index];
 
 		var img_name = img['name'];
+
+		if(img_name == sourceImage)
+			continue;
 
 		$.get('img_process.php?cmd=square&name=' + encodeURI(img_name), function(data)
 		{
@@ -127,19 +128,22 @@ function formatImages(gallery)
 
 		});
 	}
-
-	$('#formatImagesStatus').slideUp();
-	$('#formatImagesComplete').slideDown();
 }
 
+// Increments the progress bar and marks the image as procesesd
 function imageProcessed(img_name)
 {
 	processedCount++;
 
-	console.log("Processed " + processedCount + " of " + imageCount);
-
 	$('#formatImagesProgressBar').css('width', (processedCount/imageCount * 100.0) + '%');
-	$('#formatImagesProgressStatus').text(proccessedCount + " / " + imageCount);
+	$('#formatImagesProgressStatus').text(processedCount + " / " + imageCount);
+
+	// We're done, hiding the status div
+	if(processedCount == imageCount)
+	{
+		$('#formatImagesStatus').slideUp();
+		$('#formatImagesComplete').slideDown();
+	}
 }
 
 // Sets up formatting the images
@@ -151,6 +155,9 @@ function setupFormatImages()
 // Sets up the select source gallery
 function setupSelectSourceGallery(gallery)
 {
+	if(sourceGallerySetup)
+		return;
+
 	// Request the image gallery, or get the cached one if it exists
 	if(typeof gallery === 'undefined')
 	{
@@ -256,6 +263,8 @@ function getNameForGallery(name)
 {
 	if(name.length > 15)
 		return name.substring(0, 12) + "...";
+
+	return name;
 }
 
 // Slides the active step out to the left, and delays until it's done

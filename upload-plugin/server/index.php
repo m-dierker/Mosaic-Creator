@@ -62,15 +62,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'HEAD':
     case 'GET':
-    d("get");
         $upload_handler->get();
         break;
     case 'POST':
         if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
-            d("delete");
             $upload_handler->delete();
         } else {
-            d("post");
             
             if(!is_dir($upload_dir))
                 mkdir($upload_dir, 0755, true);
@@ -83,7 +80,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'DELETE':
-    d("delete1");
         $upload_handler->delete();
         break;
     default:
