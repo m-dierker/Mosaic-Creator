@@ -67,5 +67,3 @@ function makeStep($title, $desc, $id)
 
 	<?
 }
-
-?>

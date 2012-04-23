@@ -138,6 +138,3 @@ function includeFileUploadTemplates()
 
 	<?php
 }
-
-
-?>

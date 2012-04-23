@@ -9,6 +9,7 @@ var activeStep = null;
 var sourceImage = null;
 var sourceGallerySetup = false, formatImagesSetup = false;
 var imageList = null;
+var processedCount, imageCount;
 
 initListeners();
 setActiveStep('fileUploadStep');
@@ -86,15 +87,25 @@ function requireSourceImage()
 	return true;
 }
 
-function formatImages()
+function formatImages(gallery)
 {
+	// If we don't have a source image, this will show the error and return
 	if(!requireSourceImage())
 		return;
 
-	var images = getImageList();
+	// Request the gallery and have it call this method again
+	if(typeof gallery === 'undefined')
+	{
+		console.log("Requesting the image gallery");
+		getImageList(function(data)
+			{
+				formatImages(data);
+			});
+		return;
+	}
 
-	var processedCount = 0;
-	var imageCount = images.length;
+	processedCount = 0;
+	imageCount = gallery.length;
 
 	$('#formatImagesComplete').slideUp();
 	$('#formatImagesStatus').slideDown();
@@ -105,16 +116,11 @@ function formatImages()
 
 		var img_name = img['name'];
 
-		$.get('img_process.php?cmd=square&name=' + escapeURI(img_name), function(data)
+		$.get('img_process.php?cmd=square&name=' + encodeURI(img_name), function(data)
 		{
 			if(data === "1")
 			{
-				processedCount++;
-
-				console.log("Processed " + processedCount + " of " + imageCount);
-
-				$('#formatImagesProgressBar').css('width', (processedCount/imageCount * 100.0) + '%');
-				$('#formatImagesProgressStatus').text(proccessedCount + " / " + imageCount);
+				imageProcessed(img_name);
 			}
 			else
 				console.log("Error Processing Image " + img_name + ": " + data);
@@ -126,6 +132,16 @@ function formatImages()
 	$('#formatImagesComplete').slideDown();
 }
 
+function imageProcessed(img_name)
+{
+	processedCount++;
+
+	console.log("Processed " + processedCount + " of " + imageCount);
+
+	$('#formatImagesProgressBar').css('width', (processedCount/imageCount * 100.0) + '%');
+	$('#formatImagesProgressStatus').text(proccessedCount + " / " + imageCount);
+}
+
 // Sets up formatting the images
 function setupFormatImages()
 {
@@ -133,13 +149,21 @@ function setupFormatImages()
 }
 
 // Sets up the select source gallery
-function setupSelectSourceGallery()
+function setupSelectSourceGallery(gallery)
 {
+	// Request the image gallery, or get the cached one if it exists
+	if(typeof gallery === 'undefined')
+	{
+		getImageList(function(data)
+			{
+				setupSelectSourceGallery(data);
+			});
+		return;
+	}
+
 	var galleryWidth = 5;
 	var galleryCount = 0;
 
-	
-	var gallery = getImageList();
 	var text = '<table class="selectSourceGalleryTable">';
 
 	for(index in gallery)
@@ -194,18 +218,20 @@ function setupSelectSourceGallery()
 	sourceGallerySetup = true;
 }
 
-// Gets the image gallery, possibly the cached version
-function getImageList()
+// Gets the image gallery, and calls the given callback
+function getImageList(callback)
 {
 	if(imageList !== null)
-		return imageList;
+	{
+		callback(imageList);
+		return;
+	}
 
 	$.get('upload-plugin/server/', function(gallery)
 	{
 		imageList = gallery;
+		callback(imageList);
 	});
-
-	return imageList;
 }
 
 // Clears the old source image's background

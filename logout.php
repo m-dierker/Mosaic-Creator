@@ -14,5 +14,3 @@ catch (FacebookRestClientException $e)
     //you'll want to catch this
     //it fails all the time
 }
-
-?>
