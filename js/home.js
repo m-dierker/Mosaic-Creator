@@ -1,7 +1,7 @@
 // Initialize the various steps, and their associated divs to be shown/hidden.
 // These should be in the order they appear for right/left sliding to work properly
-var stepList = ['fileUploadStep', 'selectSourceStep', 'formatImagesStep'];
-var stepDivs = ['fileUpload', 'selectSource', 'formatImages']; 
+var stepList = ['fileUploadStep', 'selectSourceStep', 'createMosaicStep'];
+var stepDivs = ['fileUpload', 'selectSource', 'createMosaic']; 
 
 
 var facebookName, facebookFirstName, facebookLastName, facebookID;
@@ -63,8 +63,8 @@ function setActiveStep(id)
 		case 'selectSourceStep':
 			setupSelectSourceGallery();
 			break;
-		case 'formatImagesStep':
-			setupFormatImages();
+		case 'createMosaicStep':
+			setupCreateMosaic();
 			break;
 	}
 }
@@ -75,11 +75,11 @@ function requireSourceImage()
 {
 	if(sourceImage === null)
 	{
-		$('#formatImagesNeedsSourceImage').slideDown();
+		$('#createMosaicNeedsSourceImage').slideDown();
 		return false;
 	}
 
-	$('#formatImagesNeedsSourceImage').slideUp().hide();
+	$('#createMosaicNeedsSourceImage').slideUp().hide();
 		
 
 	return true;
@@ -143,11 +143,28 @@ function imageProcessed(img_name)
 	{
 		$('#formatImagesStatus').slideUp();
 		$('#formatImagesComplete').slideDown();
+
+		createMosaic();
 	}
 }
 
+// Actually creates the mosaic after the images have all been processed
+function createMosaic()
+{
+	// Although there should be a source image, return anyways if there isn't.
+	if(!requireSourceImage())
+		return;
+
+	console.log("Creating the mosaic!");
+
+	$.get("make_mosaic.php?source=" + encodeURI(sourceImage), function(data)
+		{
+			mosaicCreationComplete();
+		});
+}
+
 // Sets up formatting the images
-function setupFormatImages()
+function setupCreateMosaic()
 {
 	requireSourceImage();
 }

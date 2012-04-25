@@ -146,19 +146,19 @@ require_once('fileUploads.php');
 
 						<!-- Start Format Images -->
 
-						<div id="formatImages" class="formatImages step hide">
+						<div id="createMosaic" class="createMosaic step hide">
 
-							<h2>Format your images</h2>
-							<p>Once you've selected your source, the rest of the images must be processed into squares!</p>
+							<h2>Create your Mosaic!</h2>
+							<p>It's time to make the mosaic! The first step is to format your images, and then we're ready to begin.</p>
 
-							<div id="formatImagesDisplay">
-								<div id="formatImagesNeedsSourceImage" class="alert alert-error hide">
+							<div id="createMosaicDisplay">
+								<div id="createMosaicNeedsSourceImage" class="alert alert-error hide">
 									<b>Uh oh!</b> It looks like you've skipped a step. Go back to step 2 and select a source image first!
 								</div>
 
 								<div id="formatImagesStart" class="formatImagesStart">
 									<p>
-										<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images &raquo;</a>
+										<a href="javascript:formatImages();" class="btn btn-large btn-primary">Format Images & Create Mosaic &raquo;</a>
 									</p>
 								</div>
 
@@ -169,9 +169,9 @@ require_once('fileUploads.php');
 									<h4><b>Progress: </b><span id="formatImagesProgressStatus">0 / ?</span> images processed</h4>
 								</div>
 
-								<div id="formatImagesComplete" class="formatImagesComplete hide">
+								<div id="processMosaic" class="processMosaic hide">
 									<h3>Image Formatting Complete!</h3>
-									<h4>Please continue to step 4!</h4>
+									<h4>Creating your mosaic... <img src="img/pacman-loader.gif"></h4>
 								</div>
 							</div>
 
@@ -208,7 +208,7 @@ require_once('fileUploads.php');
 
 								makeStep('1) Upload Images', 'Upload your images to the server', 'fileUploadStep');
 								makeStep('2) Select Source', 'Pick one of your images to be the mosaic\'s background', 'selectSourceStep');
-								makeStep('3) Format Images', 'Format your uploads so they can be included in a mosaic', 'formatImagesStep');
+								makeStep('3) Format Images', 'Format your uploads so they can be included in a mosaic', 'createMosaicStep');
 
 								?>
 
