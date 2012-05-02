@@ -16,6 +16,8 @@ error_reporting(0);
 require('upload.class.php');
 require('../../functions.php');
 
+d("Starting the upload plugin");
+
 $user = getFacebookUser();
 
 if($user == 0)
